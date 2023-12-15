@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    test.sh                                            :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: frapp <frapp@student.42.fr>                +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/12/15 08:37:56 by frapp             #+#    #+#              #
+#    Updated: 2023/12/15 08:37:58 by frapp            ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 #!/bin/bash
 
 check_instruction_count () {
@@ -182,7 +194,7 @@ check_programm_args()
 	fi
 }
 
-summery()
+summary()
 {
 	echo "-------------------------------------------------------"
 	echo "Carefull: this tester currently does not test two empty stacks at the moment reliable!"
@@ -277,4 +289,4 @@ else
 	echo "eval testing.."
 fi
 
-summery
+summary
