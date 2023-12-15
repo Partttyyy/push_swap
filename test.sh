@@ -4,32 +4,33 @@ check_instruction_count () {
 	local INSTRUCTION_COUNT=$1
 	local RETURN_VAL="OK"
 
-	if (($2 == 0)); then
-		if (($INSTRUCTION_COUNT > 3)); then
+	echo "test"
+	if (($2==0)); then
+		if (($INSTRUCTION_COUNT>3)); then
 			RETURN_VAL="KO"
 		fi
-	elif (($2 == 1)); then
-		if (($INSTRUCTION_COUNT > 12)); then
+	elif (($2==1)); then
+		if (($INSTRUCTION_COUNT>12)); then
 			RETURN_VAL="KO"
 		fi
-	elif (($2 == 2)); then
-		if (($INSTRUCTION_COUNT > 700)); then
-			if (($POINTS_100 == 5)); then
+	elif (($2==2)); then
+		if (($INSTRUCTION_COUNT>700)); then
+			if (($POINTS_100==5)); then
 				POINTS_100=4
 			fi
-			if (($INSTRUCTION_COUNT > 900)); then
-				if (($POINTS_100 == 4)); then
+			if (($INSTRUCTION_COUNT>900)); then
+				if (($POINTS_100==4)); then
 					POINTS_100=3
 				fi
-				if (($INSTRUCTION_COUNT > 1100)); then
-					if (($POINTS_100 == 3)); then
+				if (($INSTRUCTION_COUNT>1100)); then
+					if (($POINTS_100==3)); then
 						POINTS_100=2
 					fi
-					if (($INSTRUCTION_COUNT > 1300)); then
-						if (($POINTS_100 == 2)); then
+					if (($INSTRUCTION_COUNT>1300)); then
+						if (($POINTS_100==2)); then
 							POINTS_100=1
 						fi
-						if (($INSTRUCTION_COUNT > 1500)); then
+						if (($INSTRUCTION_COUNT>1500)); then
 							RETURN_VAL="KO"
 							POINTS_100=0
 						fi
@@ -37,24 +38,24 @@ check_instruction_count () {
 				fi
 			fi
 		fi
-	elif (($2 == 3)); then
-		if (($INSTRUCTION_COUNT > 5500)); then
-			if (($POINTS_500 == 5)); then
+	elif (($2==3)); then
+		if (($INSTRUCTION_COUNT>5500)); then
+			if (($POINTS_500==5)); then
 				POINTS_500=4
 			fi
-			if (($INSTRUCTION_COUNT > 7000)); then
-				if (($POINTS_500 == 4)); then
+			if (($INSTRUCTION_COUNT>7000)); then
+				if (($POINTS_500==4)); then
 					POINTS_500=3
 				fi
-				if (($INSTRUCTION_COUNT > 8500)); then
-					if (($POINTS_500 == 3)); then
+				if (($INSTRUCTION_COUNT>8500)); then
+					if (($POINTS_500==3)); then
 						POINTS_500=2
 					fi
-					if (($INSTRUCTION_COUNT > 10000)); then
-						if (($POINTS_500 == 2)); then
+					if (($INSTRUCTION_COUNT>10000)); then
+						if (($POINTS_500==2)); then
 							POINTS_500=1
 						fi
-						if (($INSTRUCTION_COUNT > 11500)); then
+						if (($INSTRUCTION_COUNT>11500)); then
 							RETURN_VAL="KO"
 							POINTS_500=0
 						fi
@@ -70,10 +71,8 @@ test_input () {
 
 	local INPUT=$1
 
-	# Run push_swap with a timeout of 10 seconds
-	PUSH_SWAP_OUTPUT=$(gtimeout 10s ./push_swap $INPUT)
 
-	# Check if push_swap was terminated due to timeout
+	PUSH_SWAP_OUTPUT=$(gtimeout 10s ./push_swap $INPUT)
 	if [ $? -eq 124 ]; then
 		echo "Error: push_swap execution time exceeded 2 seconds (check traces for input)."
 		echo "timeout: $INPUT" >> traces.txt
@@ -81,8 +80,9 @@ test_input () {
 	fi
 
 	if [ "$PUSH_SWAP_OUTPUT" == "" ]; then
-		#CHECKER_OUTPUT=$(echo -n "$PUSH_SWAP_OUTPUT" | $CHECKER $INPUT)
-		CHECKER_OUTPUT=$(printf '' | $CHECKER $INPUT)
+		CHECKER_OUTPUT=$(echo -n "$PUSH_SWAP_OUTPUT" | $CHECKER $INPUT)
+		#stdin=$(cat)
+		#CHECKER_OUTPUT=$(printf '' | $CHECKER $INPUT)
 		INSTRUCTION_COUNT=$(echo -n "$PUSH_SWAP_OUTPUT" | wc -l | tr -d ' ')
 	else
 		CHECKER_OUTPUT=$(echo "$PUSH_SWAP_OUTPUT" | $CHECKER $INPUT)
@@ -110,7 +110,9 @@ test_input () {
 			((i++))
 		done
 		if ((IS_SPECIAL > 0)); then
-			if [ $"check_instruction_count "$INSTRUCTION_COUNT" "$IS_SPECIAL"" == "KO" ]; then
+			check_instruction_count $INSTRUCTION_COUNT $IS_SPECIAL
+			var=$(check_instruction_count $INSTRUCTION_COUNT $IS_SPECIAL)
+			if [ "$result" == "KO" ]; then
 				echo "$INPUT" >> traces.txt
 				let "KO_COUNT++"
 			else
@@ -135,7 +137,6 @@ generate_random_numbers() {
 	local num=$1
 	local range=1000000
 
-	# Generate numbers and shuffle them
 	if ((num>0)); then
 		jot -r $num 1 $range | awk '!seen[$0]++' | head -n $num | tr '\n' ' '
 	fi
@@ -187,6 +188,10 @@ summery()
 	echo "-------------------------------------------------------"
 	echo "Carefull: this tester currently does not test two empty stacks at the moment reliable!"
 	echo -e "All testes done:\n"
+	if (($EVAL == 1)); then
+		echo "points for 100 elements: $POINTS_100/5"
+		echo "points for 500 elements: $POINTS_500/5"
+	fi
 	if [ $QUESTIONABLE_ERRORS -eq 0 ] && [ $KO_COUNT -eq 0 ]; then
 		if (($EVAL == 1)); then
 			echo "Congratz, Eval passed, no tests failed!"
@@ -259,8 +264,6 @@ POINTS_500=5
 check_programm_args "$@"
 
 
-
-
 if (($EVAL == 0)); then
 	for ((TEST_NB = 0; TEST_NB < $TEST_COUNT; TEST_NB++)) do
 		INPUT=$(generate_random_numbers "$1")
@@ -274,6 +277,5 @@ else
 	run_evals
 	echo "eval testing.."
 fi
-
 
 summery
