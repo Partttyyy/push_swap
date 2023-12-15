@@ -4,7 +4,6 @@ check_instruction_count () {
 	local INSTRUCTION_COUNT=$1
 	local RETURN_VAL="OK"
 
-	echo "test"
 	if (($2==0)); then
 		if (($INSTRUCTION_COUNT>3)); then
 			RETURN_VAL="KO"
