@@ -5,30 +5,23 @@ NAME = push_swap
 SOURCES = utils/input_validation.c utils/op1.c utils/op2.c utils/op3.c utils/utils1.c utils/utils2.c \
  main.c utils/new_op1.c output1.c small_sort.c output2.c utils/utils_exit.c merge_sort1.c merge_sort2.c \
  utils/utils_sorting.c utils/utils_init.c
-NORMS = utils/input_validation.c utils/op1.c \
- main.c \
- merge_sort1.c merge_sort2.c utils/op2.c utils/op3.c utils/utils1.c utils/utils2.c utils/new_op1.c small_sort.c output1.c output2.c utils/utils_exit.c utils/utils_sorting.c utils/utils_init.c 
-
-NAME_BONUS = checker
+NAME_CHECKER = checker
 OBJECTS = $(SOURCES:.c=.o)
-SOURCES_BONUS:= $(filter-out main.c, $(SOURCES)) bonus/op_bonus/op1.c bonus/op_bonus/op2.c\
- bonus/op_bonus/op3.c bonus/main.c
-OBJECTS_BONUS = $(SOURCES_BONUS:.c=.o)
+SOURCES_CHECKER:= $(filter-out main.c, $(SOURCES)) checker_dir/op_checker/op1.c checker_dir/op_checker/op2.c\
+ checker_dir/op_checker/op3.c checker_dir/main.c
+OBJECTS_CHECKER = $(SOURCES_CHECKER:.c=.o)
 LDFLAGS = -L./libft -libft
 LIBFT_DIR = ./libft
 LIBFT = libft.a
 LIBFT_PATH = $(LIBFT_DIR)/$(LIBFT)
 
-
 all: $(NAME)
 
 $(NAME): full 
-	$(MAKE) -C $(LIBFT_DIR) clean
+	$(MAKE) -C $(LIBFT_DIR)
 
 full: $(LIBFT_PATH) $(OBJECTS)
 	$(CC) $(CFLAGS) $(LIBFT) $(OBJECTS) -o $(NAME)
-	cp $(NAME) push_swap_visualizer/build/bin/push_swap
-	chmod +x push_swap_visualizer/build/bin/push_swap
 
 $(LIBFT_PATH):
 	$(MAKE) -C $(LIBFT_DIR)
@@ -40,22 +33,18 @@ libft: $(LIBFT_PATH)
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 clean:
-	rm -f $(OBJECTS) $(OBJECTS_BONUS) 
+	$(MAKE) -C $(LIBFT_DIR) clean
+	rm -f $(OBJECTS) $(OBJECTS_CHECKER) 
 	$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
-	rm -f $(NAME) $(LIBFT) push_swap_visualizer/build/bin/push_swap $(NAME_BONUS)
+	$(MAKE) -C $(LIBFT_DIR) fclean
+	rm -f $(NAME) $(LIBFT) push_swap_visualizer/build/bin/push_swap $(NAME_CHECKER)
 	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
-bonus: $(LIBFT_PATH) $(OBJECTS_BONUS)
-	$(CC) $(CFLAGS) $(LIBFT) $(OBJECTS_BONUS) -o $(NAME_BONUS)
+checker: $(LIBFT_PATH) $(OBJECTS_CHECKER)
+	$(CC) $(CFLAGS) $(LIBFT) $(OBJECTS_CHECKER) -o $(NAME_CHECKER)
 
-norm:
-	norminette $(NORMS)
-	cp $(LIBFT_PATH) $(NAME)
-
-
-#libft_make: 
-#	$(MAKE) -C $(LIBFT_DIR)
+re_checker: fclean checker

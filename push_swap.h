@@ -6,7 +6,7 @@
 /*   By: frapp <frapp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 05:38:36 by frapp             #+#    #+#             */
-/*   Updated: 2023/12/08 09:32:33 by frapp            ###   ########.fr       */
+/*   Updated: 2023/12/14 22:08:39 by frapp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 
 # include "./libft/libft.h"
 # include <stdbool.h>
-# include <stdio.h>
 # include <stdbool.h>
-#include <sys/uio.h>
 
 typedef struct s_stack	t_stack;
 typedef struct s_both	t_both;
@@ -29,6 +27,14 @@ struct	s_stack
 	t_stack	*next;
 	t_stack	*last;
 	int		index;
+};
+
+struct	s_charset
+{
+	int		i;
+	bool	sign;
+	int		count;
+	int		nb_c;
 };
 
 typedef struct s_ouput
@@ -60,8 +66,10 @@ int		input_validation(int argc, char *argv[], t_both *both);
 
 // main sort
 bool	merge_sort(t_both *both, bool move_to_a);
-int		merge_sub_to_a(t_both *both, int to_rotate_a, int *sub_sizes_b, int sub_b_i);
-int		merge_sub_to_b(t_both *both, int to_rotate_b, int *sub_sizes_a, int sub_a_i);
+int		merge_sub_to_a(t_both *both,
+			int to_rotate_a, int *sub_sizes_b, int sub_b_i);
+int		merge_sub_to_b(t_both *both,
+			int to_rotate_b, int *sub_sizes_a, int sub_a_i);
 void	pair(t_both *both, int s_a, int s_b, int diff);
 
 // utils_sorting

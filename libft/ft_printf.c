@@ -6,13 +6,14 @@
 /*   By: frapp <frapp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 15:47:23 by frapp             #+#    #+#             */
-/*   Updated: 2023/12/08 09:28:59 by frapp            ###   ########.fr       */
+/*   Updated: 2023/12/12 18:37:33 by frapp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	logic_part(va_list *arg, const char **format_str, int *written_bytes, int fd)
+int	logic_part(va_list *arg, const char **format_str,
+		int *written_bytes, int fd)
 {
 	if (!(*format_str))
 		return (-1);

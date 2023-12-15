@@ -6,15 +6,15 @@
 /*   By: frapp <frapp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 23:20:12 by frapp             #+#    #+#             */
-/*   Updated: 2023/12/08 09:34:44 by frapp            ###   ########.fr       */
+/*   Updated: 2023/12/12 19:54:04 by frapp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
+//system("leaks push_swap");
 void	leak_check(void)
 {
-//	system("leaks push_swap");
 	exit(0);
 }
 
@@ -37,7 +37,7 @@ void	cleanup_normal(t_both *both1, t_both *both2, bool print)
 {
 	if (print)
 	{
-		//optimise_output(&both1);
+		optimise_output(both1);
 		print_output(both1);
 	}
 	if (both1->sorted_arr)
@@ -48,7 +48,6 @@ void	cleanup_normal(t_both *both1, t_both *both2, bool print)
 	del_all_output(both2);
 	free_stacks(NULL, both1);
 	free_stacks(NULL, both2);
-
 	leak_check();
 }
 
@@ -56,7 +55,6 @@ void	*free_stacks(void *check, t_both *both)
 {
 	if (check)
 		return (check);
-	
 	while (both->sa)
 		both->sa = del_node(both->sa, (both->sa)->val);
 	while (both->sb)

@@ -6,7 +6,7 @@
 /*   By: frapp <frapp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 16:00:08 by frapp             #+#    #+#             */
-/*   Updated: 2023/12/08 06:52:05 by frapp            ###   ########.fr       */
+/*   Updated: 2023/12/12 18:37:13 by frapp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 
 int	ft_printf(const char *format_str, ...);
 int	ft_fprintf(int fd, const char *format_str, ...);
-int	logic_part(va_list *arg, const char **format_str, int *written_bytes, int fd);
+int	logic_part(va_list *arg, const char **format_str,
+		int *written_bytes, int fd);
 
 int	ft_printf_handle_c(va_list *arg, int *written_bytes, int fd);
 int	ft_printf_handle_di(va_list *arg, int *written_bytes, int fd);

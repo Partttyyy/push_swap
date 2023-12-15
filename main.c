@@ -6,14 +6,14 @@
 /*   By: frapp <frapp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 16:45:21 by frapp             #+#    #+#             */
-/*   Updated: 2023/12/08 06:48:11 by frapp            ###   ########.fr       */
+/*   Updated: 2023/12/12 19:53:59 by frapp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 //write(1, "\n", 1);
-int	a(int ac, char *av[])
+int	main2(int ac, char *av[])
 {
 	t_both	both;
 	t_both	both2;
@@ -27,7 +27,7 @@ int	a(int ac, char *av[])
 	input_validation(ac, av, &both);
 	get_sorted_arr(&both);
 	if (!check_vs_sorted_arr(&both))
-		return ( cleanup_normal(&both, &both2, 0), 0);
+		return (cleanup_normal(&both, &both2, 0), 0);
 	clone_both(&both, &both2);
 	check_small_stacks(&both);
 	shove_half_to_b(&both);
@@ -40,18 +40,9 @@ int	a(int ac, char *av[])
 	return (0);
 }
 
+//system("leaks push_swap");
 int	main(int ac, char *av[])
 {
-	a(ac, av);
-	system("leaks push_swap");
+	main2(ac, av);
 	return (0);
 }
-// 	//atexit(check_for_leaks);
-	
-// 	char *a  = malloc(1);
-// 	system("leaks a.out");
-
-// void check_for_leaks(void)
-// {
-// 	system("leaks a.out");
-// }

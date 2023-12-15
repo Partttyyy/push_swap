@@ -6,7 +6,7 @@
 /*   By: frapp <frapp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 22:22:26 by frapp             #+#    #+#             */
-/*   Updated: 2023/12/08 08:20:04 by frapp            ###   ########.fr       */
+/*   Updated: 2023/12/12 22:56:57 by frapp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,12 @@ void	ft_putnbr_fd(int n, int fd);
 
 char	*get_next_line(int fd);
 int		ft_printf(const char *format_str, ...);
-int	ft_fprintf(int fd, const char *format_str, ...);
+int		ft_fprintf(int fd, const char *format_str, ...);
 
 int		ft_pow(int base, int expo);
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_iswhitespace(char c);
+int		ft_space(char c);
 size_t	ft_strcpy(char *dst, const char *src);
 
 typedef struct s_list
